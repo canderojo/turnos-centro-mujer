@@ -62,8 +62,26 @@ Endpoints disponibles:
 
 ### Frontend
 
-Pendiente: `frontend/` todavía no está inicializado (ver
-[decisiones.md](./decisiones.md) para el stack elegido — React + Vite).
+```bash
+cd frontend
+cp .env.example .env   # VITE_API_URL apunta a http://localhost:8080 por defecto
+
+npm install
+npm run dev
+```
+
+El sitio queda en `http://localhost:5173` (el backend ya tiene ese origen
+habilitado en CORS). Requiere el backend corriendo para poder listar
+profesionales, ver horarios y reservar turnos.
+
+Pantallas:
+
+- **Profesionales** (`/`) — listado filtrable por especialidad.
+- **Detalle de profesional** (`/profesionales/:id`) — elegir fecha, ver
+  horarios disponibles y reservar un turno.
+- **Mis turnos** (`/mis-turnos`) — buscar turnos propios por DNI o email.
+- **Detalle de turno** (`/turnos/:id`) — ver un turno y cambiar su estado
+  (confirmar, cancelar, completar) según las transiciones permitidas.
 
 ## Documentación de decisiones técnicas
 

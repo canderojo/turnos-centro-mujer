@@ -6,6 +6,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
 
 	"github.com/canderojo/turnos-centro-mujer/backend/internal/config"
@@ -36,8 +37,27 @@ func main() {
 	router := chi.NewRouter()
 	router.Use(middleware.Logger) // loguea cada request en la consola (método, ruta, tiempo de respuesta)
 
+	// Sin esto, el navegador bloquea los pedidos que el frontend (en
+	// otro puerto, el dev server de Vite) le hace a esta API.
+	router.Use(cors.Handler(cors.Options{
+		AllowedOrigins: []string{cfg.FrontendURL},
+		AllowedMethods: []string{"GET", "POST", "PATCH", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type"},
+	}))
+
 	healthHandler := handlers.HealthHandler{DB: database}
 	router.Get("/health", healthHandler.Health)
+
+	profesionalesHandler := handlers.ProfesionalesHandler{DB: database}
+	router.Get("/profesionales", profesionalesHandler.Listar)
+	router.Get("/profesionales/{id}", profesionalesHandler.Obtener)
+	router.Get("/profesionales/{id}/horarios-disponibles", profesionalesHandler.HorariosDisponibles)
+
+	turnosHandler := handlers.TurnosHandler{DB: database}
+	router.Post("/turnos", turnosHandler.Crear)
+	router.Get("/turnos", turnosHandler.ListarDePaciente)
+	router.Get("/turnos/{id}", turnosHandler.Obtener)
+	router.Patch("/turnos/{id}/estado", turnosHandler.CambiarEstado)
 
 	log.Printf("Servidor escuchando en http://localhost:%s", cfg.Port)
 	if err := http.ListenAndServe(":"+cfg.Port, router); err != nil {

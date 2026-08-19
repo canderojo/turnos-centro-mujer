@@ -11,6 +11,7 @@ import "os"
 type Config struct {
 	Port        string
 	DatabaseURL string
+	FrontendURL string
 }
 
 // Load arma un Config leyendo variables de entorno, con valores por
@@ -19,6 +20,9 @@ func Load() Config {
 	return Config{
 		Port:        getEnv("PORT", "8080"),
 		DatabaseURL: getEnv("DATABASE_URL", ""),
+		// Origen permitido para CORS: el dev server de Vite usa el
+		// puerto 5173 por defecto.
+		FrontendURL: getEnv("FRONTEND_URL", "http://localhost:5173"),
 	}
 }
 

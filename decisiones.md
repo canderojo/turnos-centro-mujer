@@ -59,24 +59,6 @@ hardcodeados. Esto es una decisión pensada para el futuro: cuando se
 dockerice el proyecto (trabajo posterior), no debería hacer falta tocar
 código, solo cambiar las variables de entorno inyectadas por Docker.
 
-## 2026-08-19 — Esquema de base de datos (TP2)
-
-**Enums de aplicación (`especialidad`, `estado`) como `TEXT` + `CHECK`**,
-en vez de tipos `ENUM` nativos de Postgres: agregar un valor nuevo a un
-`CHECK` es un `ALTER TABLE` chico y fácil de explicar; modificar un
-`ENUM` nativo de Postgres es más raro (hay que usar `ALTER TYPE ... ADD
-VALUE`, que además no se puede revertir fácil). Para el tamaño de este
-proyecto, `TEXT + CHECK` es más simple sin perder validación a nivel
-de base de datos.
-
-**Repository pattern simple (funciones, no interfaces)**: la capa
-`internal/repository` son funciones de Go que reciben `*sqlx.DB` y
-devuelven structs o errores — sin interfaces ni "repositorio genérico".
-Elegido a propósito: es el patrón mínimo que separa el SQL del resto
-del código (necesario para poder testear las reglas de negocio del
-TP5 sin levantar Postgres), sin la complejidad extra de interfaces que
-en un proyecto de este tamaño no se llegan a aprovechar.
-
 ## Notas para más adelante (no implementar todavía)
 
 - Cuando se dockerice: el `.env.example` del backend va a necesitar un

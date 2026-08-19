@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import Flor from "./illustrations/Flor";
 import "./Header.css";
 
 export default function Header() {
@@ -8,7 +7,9 @@ export default function Header() {
       <div className="header-inner">
         <NavLink to="/" className="header-brand">
           <span className="header-brand-mark">
-            <Flor />
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4v16M4 12h16" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+            </svg>
           </span>
           Centro de Salud de la Mujer
         </NavLink>

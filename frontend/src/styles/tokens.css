@@ -1,57 +1,59 @@
 :root {
-  /* Tipografía */
-  --font-heading: "Quicksand", "Trebuchet MS", sans-serif;
-  --font-body: "Nunito", "Segoe UI", sans-serif;
+  /* Tipografía: una sola familia, jerarquía por peso — como usan los
+     sitios reales de salud (Gotham/Open Sans, no fuentes "redondas") */
+  --font-heading: "Public Sans", "Segoe UI", sans-serif;
+  --font-body: "Public Sans", "Segoe UI", sans-serif;
 
-  /* Paleta rosa / cálida, con identidad de salud de la mujer */
-  --color-bg: #fff0f5;
-  --color-bg-alt: #fbe3ee;
-  --gradient-bg: linear-gradient(160deg, #fff5f8 0%, #ffe7f1 45%, #f8e0f2 100%);
+  /* Paleta: rosa apagado sobre blanco, no gradiente pastel.
+     Referencia: Hospital Privado Córdoba (rosa #CE7297 en H2) y
+     Centro Médico Mujer CABA (acento sólido, esquinas rectas). */
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-surface-alt: #fce8f2;
+  --color-surface-alt: #fbeef3;
 
-  --color-primary: #d6417f;
-  --color-primary-hover: #b52f68;
-  --color-primary-light: #f9d7e6;
+  --color-primary: #ab4d70;
+  --color-primary-hover: #8a3c5a;
+  --color-primary-light: #f3dce6;
 
-  --color-secondary: #9b5de5;
-  --color-secondary-light: #ede0f9;
+  --color-secondary: #5c6f9b;
+  --color-secondary-light: #e6e9f3;
 
-  --color-accent: #ff8fab;
-  --color-accent-light: #ffe1e9;
+  --color-accent: #ab4d70;
+  --color-accent-light: #f3dce6;
 
-  --color-text: #4a2338;
-  --color-text-muted: #8f6478;
-  --color-border: #f4d3e4;
+  --color-text: #2c2226;
+  --color-text-muted: #776872;
+  --color-border: #e6dde1;
 
   /* Estados de turno */
-  --color-pendiente: #d98a2b;
-  --color-pendiente-bg: #fbecd4;
-  --color-confirmado: #4f8a5b;
-  --color-confirmado-bg: #e2f0e4;
-  --color-cancelado: #d1495b;
-  --color-cancelado-bg: #fbe1e5;
-  --color-completado: #8457c5;
-  --color-completado-bg: #ede2f9;
+  --color-pendiente: #a56a1f;
+  --color-pendiente-bg: #f6ecd8;
+  --color-confirmado: #457357;
+  --color-confirmado-bg: #e3ede6;
+  --color-cancelado: #a13c50;
+  --color-cancelado-bg: #f5e1e6;
+  --color-completado: #4c5f8a;
+  --color-completado-bg: #e5e8f1;
 
-  /* Especialidades */
-  --color-dermatologia: #d6417f;
-  --color-nutricion: #4f8a5b;
-  --color-ecografia: #3d8bc4;
-  --color-endocrinologia: #9b5de5;
+  /* Especialidades — el rosa de marca para dermatología, tonos
+     apagados afines para el resto (nunca colores saturados/arcoíris) */
+  --color-dermatologia: #ab4d70;
+  --color-nutricion: #4f7a5c;
+  --color-ecografia: #4c6e93;
+  --color-endocrinologia: #93702f;
 
   /* Feedback */
-  --color-error: #b3261e;
-  --color-error-bg: #fbeceb;
+  --color-error: #a13c2e;
+  --color-error-bg: #f6e4e1;
 
-  /* Forma y profundidad */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* Forma: esquinas casi rectas, no "pastilla" en todo */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 3px rgba(180, 40, 100, 0.1);
-  --shadow-md: 0 8px 24px rgba(180, 40, 100, 0.15);
+  --shadow-sm: 0 1px 2px rgba(30, 20, 24, 0.06);
+  --shadow-md: 0 4px 16px rgba(30, 20, 24, 0.1);
 
   --space-1: 4px;
   --space-2: 8px;

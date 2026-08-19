@@ -1,4 +1,3 @@
-import Flor from "./illustrations/Flor";
 import { ESPECIALIDADES } from "../api/profesionales";
 import "./Footer.css";
 
@@ -8,7 +7,9 @@ export default function Footer() {
       <div className="footer-inner">
         <div className="footer-brand">
           <span className="footer-brand-mark">
-            <Flor color="#fff" />
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 4v16M4 12h16" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+            </svg>
           </span>
           <div>
             <p className="footer-brand-nombre">Centro de Salud de la Mujer</p>

@@ -5,8 +5,7 @@ import { ApiError } from "../api/client";
 import { formatHora, formatPrecio } from "../utils/format";
 import EspecialidadBadge from "../components/EspecialidadBadge";
 import EspecialidadIcon from "../components/icons/EspecialidadIcon";
-import HeroIlustracion from "../components/illustrations/HeroIlustracion";
-import IlustracionVacia from "../components/illustrations/IlustracionVacia";
+import EmptyIcon from "../components/icons/EmptyIcon";
 import "./ProfesionalesPage.css";
 
 export default function ProfesionalesPage() {
@@ -28,36 +27,33 @@ export default function ProfesionalesPage() {
     <>
       <section className="hero">
         <div className="hero-inner">
-          <div className="hero-texto">
-            <h1>Cuidarte, a tu ritmo</h1>
-            <p className="hero-subtitulo">
-              Elegí un profesional para ver sus horarios disponibles y reservar tu
-              consulta en dermatología, nutrición, ecografía o endocrinología.
-            </p>
+          <p className="hero-eyebrow">Turnos online</p>
+          <h1>Reservá tu consulta con el profesional que necesitás</h1>
+          <p className="hero-subtitulo">
+            Dermatología, nutrición, ecografía y endocrinología. Elegí especialidad,
+            fecha y horario disponible.
+          </p>
 
-            <div className="chips" role="group" aria-label="Filtrar por especialidad">
+          <div className="tabs" role="group" aria-label="Filtrar por especialidad">
+            <button
+              type="button"
+              className={`tab${especialidad === "" ? " tab-active" : ""}`}
+              onClick={() => setEspecialidad("")}
+            >
+              Todas
+            </button>
+            {ESPECIALIDADES.map((e) => (
               <button
+                key={e.value}
                 type="button"
-                className={`chip${especialidad === "" ? " chip-active" : ""}`}
-                onClick={() => setEspecialidad("")}
+                className={`tab${especialidad === e.value ? " tab-active" : ""}`}
+                onClick={() => setEspecialidad(e.value)}
               >
-                Todas
+                <EspecialidadIcon especialidad={e.value} size={15} />
+                {e.label}
               </button>
-              {ESPECIALIDADES.map((e) => (
-                <button
-                  key={e.value}
-                  type="button"
-                  className={`chip${especialidad === e.value ? " chip-active" : ""}`}
-                  style={{ "--chip-accent": `var(--color-${e.value})` }}
-                  onClick={() => setEspecialidad(e.value)}
-                >
-                  <EspecialidadIcon especialidad={e.value} size={16} />
-                  {e.label}
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
-          <HeroIlustracion className="hero-ilustracion" />
         </div>
       </section>
 
@@ -67,7 +63,7 @@ export default function ProfesionalesPage() {
 
         {!loading && !error && profesionales.length === 0 && (
           <div className="empty-state">
-            <IlustracionVacia className="empty-state-ilustracion" />
+            <EmptyIcon />
             <p>No hay profesionales disponibles para este filtro.</p>
           </div>
         )}
@@ -80,10 +76,14 @@ export default function ProfesionalesPage() {
               className="profesional-card card"
               style={{ "--card-accent": `var(--color-${p.especialidad})` }}
             >
-              <EspecialidadIcon especialidad={p.especialidad} size={64} />
               <div className="profesional-card-header">
-                <h3>{p.nombre}</h3>
-                <EspecialidadBadge especialidad={p.especialidad} />
+                <span className="profesional-card-icon">
+                  <EspecialidadIcon especialidad={p.especialidad} size={18} />
+                </span>
+                <div>
+                  <h3>{p.nombre}</h3>
+                  <EspecialidadBadge especialidad={p.especialidad} />
+                </div>
               </div>
               <p className="muted">
                 Atiende de {formatHora(p.hora_inicio_atencion)} a {formatHora(p.hora_fin_atencion)}

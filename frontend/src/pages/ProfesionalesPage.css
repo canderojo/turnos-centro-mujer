@@ -5,117 +5,116 @@
 }
 
 .hero-inner {
-  max-width: var(--content-width);
+  max-width: 720px;
   margin: 0 auto;
-  padding: var(--space-7) var(--space-5);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-6);
+  padding: var(--space-7) var(--space-5) var(--space-6);
 }
 
-.hero-texto {
-  flex: 1;
-  min-width: 280px;
-  max-width: 640px;
-}
-
-.hero-texto h1 {
-  font-size: clamp(2.2rem, 4vw, 3.1rem);
-  line-height: 1.1;
+.hero-eyebrow {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-primary);
+  margin: 0 0 var(--space-3);
+}
+
+.hero-inner h1 {
+  font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+  line-height: 1.2;
   margin-bottom: var(--space-3);
 }
 
 .hero-subtitulo {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--color-text-muted);
-  max-width: 52ch;
+  max-width: 56ch;
 }
 
-.hero-ilustracion {
-  width: 300px;
-  height: 240px;
-  flex-shrink: 0;
-}
-
-.chips {
+.tabs {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2);
   margin-top: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 0;
 }
 
-.chip {
+.tab {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  border: 1.5px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  padding: var(--space-2) var(--space-3) var(--space-3);
   font-family: var(--font-body);
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.chip:hover {
-  border-color: var(--chip-accent, var(--color-primary));
-  color: var(--chip-accent, var(--color-primary));
+.tab:hover {
+  color: var(--color-primary);
 }
 
-.chip-active {
-  background: var(--chip-accent, var(--color-primary));
-  border-color: var(--chip-accent, var(--color-primary));
-  color: #fff;
+.tab-active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
 }
 
 .profesionales-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: var(--space-5);
+  gap: var(--space-4);
   margin-top: var(--space-5);
 }
 
 .profesional-card {
   position: relative;
   color: inherit;
-  border-top: 4px solid var(--card-accent, var(--color-primary));
-  padding-top: var(--space-6);
-  min-height: 190px;
+  min-height: 170px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-.profesional-card svg:first-child {
-  position: absolute;
-  top: var(--space-5);
-  right: var(--space-5);
-  color: var(--card-accent, var(--color-primary));
-  opacity: 0.12;
+.card.profesional-card {
+  border-top: 3px solid var(--card-accent, var(--color-primary));
 }
 
 .profesional-card:hover {
   text-decoration: none;
-  transform: translateY(-3px);
   box-shadow: var(--shadow-md);
+  border-color: var(--color-border);
 }
 
 .profesional-card-header {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-2);
-  margin-bottom: var(--space-2);
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.profesional-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--card-accent, var(--color-primary)) 12%, white);
+  color: var(--card-accent, var(--color-primary));
 }
 
 .profesional-card-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
+  margin: 0 0 var(--space-1);
+  font-size: 1.05rem;
 }
 
 .profesional-card-footer {
@@ -124,26 +123,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px dashed var(--color-border);
+  border-top: 1px solid var(--color-border);
 }
 
 .profesional-card-precio {
   font-weight: 700;
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 .profesional-card-cta {
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
 .profesional-card:hover .profesional-card-cta {
   color: var(--color-primary);
-}
-
-@media (max-width: 640px) {
-  .hero-ilustracion {
-    display: none;
-  }
 }

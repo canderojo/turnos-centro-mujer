@@ -6,7 +6,7 @@ import { ApiError } from "../api/client";
 import { formatFechaHora, formatPrecio } from "../utils/format";
 import EstadoBadge from "../components/EstadoBadge";
 import EspecialidadBadge from "../components/EspecialidadBadge";
-import IlustracionExito from "../components/illustrations/IlustracionExito";
+import CheckIcon from "../components/icons/CheckIcon";
 import "./TurnoDetailPage.css";
 
 const ACCION_POR_ESTADO = {
@@ -79,9 +79,9 @@ export default function TurnoDetailPage() {
       </Link>
 
       {location.state?.recienCreado && (
-        <div className="alert alert-success alert-success-ilustrado">
-          <IlustracionExito className="alert-success-ilustracion" />
-          <span>¡Tu turno se reservó con éxito!</span>
+        <div className="alert alert-success alert-success-icon">
+          <CheckIcon />
+          <span>Tu turno se reservó con éxito.</span>
         </div>
       )}
 

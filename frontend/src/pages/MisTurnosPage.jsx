@@ -4,7 +4,7 @@ import { listarTurnosDePaciente } from "../api/turnos";
 import { ApiError } from "../api/client";
 import { formatFechaHora, formatPrecio } from "../utils/format";
 import EstadoBadge from "../components/EstadoBadge";
-import IlustracionVacia from "../components/illustrations/IlustracionVacia";
+import EmptyIcon from "../components/icons/EmptyIcon";
 import "./MisTurnosPage.css";
 
 export default function MisTurnosPage() {
@@ -73,7 +73,7 @@ export default function MisTurnosPage() {
 
       {turnos && turnos.length === 0 && (
         <div className="empty-state">
-          <IlustracionVacia className="empty-state-ilustracion" />
+          <EmptyIcon />
           <p>No encontramos turnos con esos datos.</p>
         </div>
       )}

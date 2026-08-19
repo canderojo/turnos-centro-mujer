@@ -1,0 +1,23 @@
+# --- Go (backend) ---
+backend/bin/
+backend/*.exe
+backend/*.test
+backend/*.out
+# Go compilado, no se sube (se recompila con go build)
+
+# --- Node / React (frontend) ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# --- Variables de entorno (secretos, nunca al repo) ---
+.env
+backend/.env
+frontend/.env
+frontend/.env.local
+
+# --- Editores / SO ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,65 @@
+:root {
+  /* Tipografía */
+  --font-heading: "Quicksand", "Trebuchet MS", sans-serif;
+  --font-body: "Nunito", "Segoe UI", sans-serif;
+
+  /* Paleta rosa / cálida, con identidad de salud de la mujer */
+  --color-bg: #fff0f5;
+  --color-bg-alt: #fbe3ee;
+  --gradient-bg: linear-gradient(160deg, #fff5f8 0%, #ffe7f1 45%, #f8e0f2 100%);
+  --color-surface: #ffffff;
+  --color-surface-alt: #fce8f2;
+
+  --color-primary: #d6417f;
+  --color-primary-hover: #b52f68;
+  --color-primary-light: #f9d7e6;
+
+  --color-secondary: #9b5de5;
+  --color-secondary-light: #ede0f9;
+
+  --color-accent: #ff8fab;
+  --color-accent-light: #ffe1e9;
+
+  --color-text: #4a2338;
+  --color-text-muted: #8f6478;
+  --color-border: #f4d3e4;
+
+  /* Estados de turno */
+  --color-pendiente: #d98a2b;
+  --color-pendiente-bg: #fbecd4;
+  --color-confirmado: #4f8a5b;
+  --color-confirmado-bg: #e2f0e4;
+  --color-cancelado: #d1495b;
+  --color-cancelado-bg: #fbe1e5;
+  --color-completado: #8457c5;
+  --color-completado-bg: #ede2f9;
+
+  /* Especialidades */
+  --color-dermatologia: #d6417f;
+  --color-nutricion: #4f8a5b;
+  --color-ecografia: #3d8bc4;
+  --color-endocrinologia: #9b5de5;
+
+  /* Feedback */
+  --color-error: #b3261e;
+  --color-error-bg: #fbeceb;
+
+  /* Forma y profundidad */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 3px rgba(180, 40, 100, 0.1);
+  --shadow-md: 0 8px 24px rgba(180, 40, 100, 0.15);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --content-width: 1140px;
+}

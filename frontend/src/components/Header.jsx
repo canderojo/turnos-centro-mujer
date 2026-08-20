@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { ESPECIALIDADES } from "../api/profesionales";
 import "./Header.css";
 
 export default function Header() {
@@ -29,6 +30,14 @@ export default function Header() {
           </NavLink>
         </nav>
       </div>
+      <p className="header-ribbon">
+        {ESPECIALIDADES.map((e, i) => (
+          <span key={e.value}>
+            {i > 0 && <span className="header-ribbon-sep">✦</span>}
+            {e.label}
+          </span>
+        ))}
+      </p>
     </header>
   );
 }

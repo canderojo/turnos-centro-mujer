@@ -24,6 +24,7 @@
 
 .buscar-input-row input {
   flex: 1;
+  min-width: 0;
   font-family: var(--font-body);
   font-size: 1rem;
   padding: var(--space-3) var(--space-4);

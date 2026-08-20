@@ -75,3 +75,22 @@
   color: var(--color-primary);
   border-bottom-color: var(--color-primary);
 }
+
+@media (max-width: 480px) {
+  .header-inner {
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+  }
+
+  .header-brand {
+    font-size: 1rem;
+  }
+
+  .header-nav {
+    gap: var(--space-4);
+  }
+
+  .header-link {
+    padding: var(--space-1) 0;
+  }
+}

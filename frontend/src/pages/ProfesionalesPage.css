@@ -10,6 +10,12 @@
   padding: var(--space-7) var(--space-5) var(--space-6);
 }
 
+@media (max-width: 480px) {
+  .hero-inner {
+    padding: var(--space-5) var(--space-4) var(--space-5);
+  }
+}
+
 .hero-eyebrow {
   font-family: var(--font-body);
   font-weight: 700;

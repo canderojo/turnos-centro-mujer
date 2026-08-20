@@ -10,6 +10,13 @@ export function formatPrecio(precio) {
   }).format(precio);
 }
 
+// El backend manda las horas de atención en reloj de Argentina pero
+// serializadas con sufijo "Z" (UTC) sin conversión real (no maneja huso
+// horario). Si dejáramos que el navegador las interprete como UTC de
+// verdad, se corren -3hs al mostrarlas. Por eso en todo este archivo
+// forzamos timeZone: "UTC" (para mostrar) o usamos los getters UTC* (para
+// comparar): así se toman los dígitos tal cual vienen, sin conversión.
+
 export function formatFechaHora(iso) {
   const fecha = new Date(iso);
   return fecha.toLocaleString("es-AR", {
@@ -18,6 +25,7 @@ export function formatFechaHora(iso) {
     month: "long",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "UTC",
   });
 }
 
@@ -25,6 +33,7 @@ export function formatHoraSlot(iso) {
   return new Date(iso).toLocaleTimeString("es-AR", {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: "UTC",
   });
 }
 
@@ -32,7 +41,7 @@ export function formatHoraSlot(iso) {
 // el huso horario), para saber si dos timestamps son "el mismo horario".
 export function claveSlot(iso) {
   const d = new Date(iso);
-  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}`;
+  return `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}-${d.getUTCHours()}-${d.getUTCMinutes()}`;
 }
 
 export function hoyISO() {

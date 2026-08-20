@@ -16,14 +16,18 @@ function armarGrillaDelDia(profesional, fecha, disponibles) {
   const [horaFin, minFin] = profesional.hora_fin_atencion.split(":").map(Number);
   const duracion = profesional.duracion_turno_minutos;
 
-  const inicio = new Date(`${fecha}T00:00:00`);
-  inicio.setHours(horaInicio, minInicio, 0, 0);
-  const fin = new Date(`${fecha}T00:00:00`);
-  fin.setHours(horaFin, minFin, 0, 0);
+  // El backend maneja las horas como reloj de Argentina "sin huso" (las
+  // manda con sufijo Z pero sin convertir). Armamos la grilla en UTC
+  // también, para comparar dígito a dígito sin que el navegador aplique
+  // una conversión de huso horario que no corresponde.
+  const inicio = new Date(`${fecha}T00:00:00.000Z`);
+  inicio.setUTCHours(horaInicio, minInicio, 0, 0);
+  const fin = new Date(`${fecha}T00:00:00.000Z`);
+  fin.setUTCHours(horaFin, minFin, 0, 0);
 
   const disponiblesClaves = new Set(disponibles.map(claveSlot));
   const slots = [];
-  for (let t = new Date(inicio); t < fin; t.setMinutes(t.getMinutes() + duracion)) {
+  for (let t = new Date(inicio); t < fin; t.setUTCMinutes(t.getUTCMinutes() + duracion)) {
     const iso = new Date(t).toISOString();
     slots.push({ iso, disponible: disponiblesClaves.has(claveSlot(iso)) });
   }
@@ -77,6 +81,12 @@ export default function ProfesionalDetailPage() {
   async function handleReservar(e) {
     e.preventDefault();
     setErrorReserva(null);
+
+    if (!/^\d{8}$/.test(form.dni)) {
+      setErrorReserva("El DNI debe tener 8 dígitos, sin puntos ni espacios.");
+      return;
+    }
+
     setEnviando(true);
     try {
       const turno = await crearTurno({
@@ -190,8 +200,11 @@ export default function ProfesionalDetailPage() {
             <input
               id="dni"
               required
+              inputMode="numeric"
+              maxLength={8}
+              placeholder="Sin puntos, 8 dígitos"
               value={form.dni}
-              onChange={(e) => setForm({ ...form, dni: e.target.value })}
+              onChange={(e) => setForm({ ...form, dni: e.target.value.replace(/\D/g, "").slice(0, 8) })}
             />
           </div>
           <div className="field">
@@ -205,10 +218,9 @@ export default function ProfesionalDetailPage() {
             />
           </div>
           <div className="field">
-            <label htmlFor="telefono">Teléfono</label>
+            <label htmlFor="telefono">Teléfono (opcional)</label>
             <input
               id="telefono"
-              required
               value={form.telefono}
               onChange={(e) => setForm({ ...form, telefono: e.target.value })}
             />

@@ -62,21 +62,19 @@ func ExisteSuperposicionPaciente(db *sqlx.DB, pacienteID int, inicio, fin time.T
 func CrearTurno(db *sqlx.DB, t models.Turno) (*models.Turno, error) {
 	var turno models.Turno
 	err := db.Get(&turno, `
-		INSERT INTO turnos (codigo, profesional_id, paciente_id, fecha_hora_inicio, fecha_hora_fin, estado, precio)
-		VALUES ($1, $2, $3, $4, $5, $6, $7)
+		INSERT INTO turnos (profesional_id, paciente_id, fecha_hora_inicio, fecha_hora_fin, estado, precio)
+		VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING *
-	`, t.Codigo, t.ProfesionalID, t.PacienteID, t.FechaHoraInicio, t.FechaHoraFin, t.Estado, t.Precio)
+	`, t.ProfesionalID, t.PacienteID, t.FechaHoraInicio, t.FechaHoraFin, t.Estado, t.Precio)
 	if err != nil {
 		return nil, err
 	}
 	return &turno, nil
 }
 
-// ObtenerTurnoPorCodigo busca un turno por su código público (no por su
-// ID secuencial — ver comentario en models.Turno).
-func ObtenerTurnoPorCodigo(db *sqlx.DB, codigo string) (*models.Turno, error) {
+func ObtenerTurno(db *sqlx.DB, id int) (*models.Turno, error) {
 	var turno models.Turno
-	err := db.Get(&turno, `SELECT * FROM turnos WHERE codigo = $1`, codigo)
+	err := db.Get(&turno, `SELECT * FROM turnos WHERE id = $1`, id)
 	if err != nil {
 		return nil, err
 	}

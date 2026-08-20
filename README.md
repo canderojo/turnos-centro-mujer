@@ -57,8 +57,8 @@ Endpoints disponibles:
 - `GET /profesionales` (opcional `?especialidad=`) y `GET /profesionales/{id}`.
 - `GET /profesionales/{id}/horarios-disponibles?fecha=YYYY-MM-DD` — huecos libres para reservar ese día.
 - `POST /turnos` — reserva un turno (crea el paciente si no existe, identificándolo por DNI).
-- `GET /turnos/{codigo}` y `GET /turnos?dni=...` / `?email=...` ("mis turnos"). `{codigo}` es el token aleatorio que devuelve `POST /turnos`, no el ID de la base — ver decisiones.md, regla de negocio 7.
-- `PATCH /turnos/{codigo}/estado` — confirma, cancela o completa un turno.
+- `GET /turnos/{id}` y `GET /turnos?dni=...` / `?email=...` ("mis turnos").
+- `PATCH /turnos/{id}/estado` — confirma, cancela o completa un turno.
 
 ### Frontend
 

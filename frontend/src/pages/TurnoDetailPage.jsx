@@ -18,7 +18,7 @@ const ACCION_POR_ESTADO = {
 };
 
 export default function TurnoDetailPage() {
-  const { codigo } = useParams();
+  const { id } = useParams();
   const location = useLocation();
 
   const [turno, setTurno] = useState(null);
@@ -29,7 +29,7 @@ export default function TurnoDetailPage() {
 
   function cargarTurno() {
     setError(null);
-    obtenerTurno(codigo)
+    obtenerTurno(id)
       .then((t) => {
         setTurno(t);
         return obtenerProfesional(t.profesional_id);
@@ -40,13 +40,13 @@ export default function TurnoDetailPage() {
       );
   }
 
-  useEffect(cargarTurno, [codigo]);
+  useEffect(cargarTurno, [id]);
 
   async function handleCambiarEstado(nuevoEstado) {
     setCambiandoEstado(nuevoEstado);
     setErrorEstado(null);
     try {
-      const actualizado = await cambiarEstadoTurno(codigo, nuevoEstado);
+      const actualizado = await cambiarEstadoTurno(id, nuevoEstado);
       setTurno(actualizado);
     } catch (err) {
       setErrorEstado(err instanceof ApiError ? err.message : "No pudimos actualizar el turno.");

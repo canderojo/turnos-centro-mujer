@@ -108,21 +108,6 @@ un turno "confirmado" cuyo `fecha_hora_fin` ya pasó se considera
 completado al leerlo, y se persiste en la base en ese momento (no es
 un cálculo solo de lectura).
 
-**Regla de negocio 7 — los turnos se identifican por un código
-aleatorio, no por su ID de base**: `GET /turnos/{id}` y
-`PATCH /turnos/{id}/estado` usaban el ID secuencial de Postgres (1, 2,
-3...) directo en la URL. Como no hay login, cualquiera podía probar
-números consecutivos y ver o cancelar turnos ajenos. Se agregó una
-columna `codigo` (16 bytes aleatorios, generados con `crypto/rand` en
-Go) que es el identificador público real; el ID numérico sigue
-existiendo para las foreign keys y como número prolijo para mostrar
-("Turno #4"), pero ya no sirve para acceder a nada por sí solo. Se
-evaluó agregar login completo para esto, pero es una capa de
-complejidad mucho mayor (autenticación, sesiones, recuperación de
-contraseña) para un problema que un token no adivinable ya resuelve
-razonablemente bien, dado que tampoco hay datos más sensibles que
-nombre/DNI/email/horario de una consulta.
-
 **Página 404 y pasada de responsive**: se agregó una ruta catch-all en
 el frontend para URLs que no matchean ninguna pantalla, y se revisó el
 sitio a 320-375px de ancho (encontró y corrigió un overflow horizontal

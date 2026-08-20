@@ -56,12 +56,8 @@ func main() {
 	turnosHandler := handlers.TurnosHandler{DB: database}
 	router.Post("/turnos", turnosHandler.Crear)
 	router.Get("/turnos", turnosHandler.ListarDePaciente)
-	// {codigo}, no {id}: un turno se busca por un código aleatorio no
-	// adivinable, no por su ID secuencial de la base (ver regla de
-	// negocio 7 en decisiones.md — evita que alguien mire o cancele
-	// turnos ajenos probando números).
-	router.Get("/turnos/{codigo}", turnosHandler.Obtener)
-	router.Patch("/turnos/{codigo}/estado", turnosHandler.CambiarEstado)
+	router.Get("/turnos/{id}", turnosHandler.Obtener)
+	router.Patch("/turnos/{id}/estado", turnosHandler.CambiarEstado)
 
 	log.Printf("Servidor escuchando en http://localhost:%s", cfg.Port)
 	if err := http.ListenAndServe(":"+cfg.Port, router); err != nil {

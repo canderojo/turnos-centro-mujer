@@ -81,7 +81,7 @@ export default function MisTurnosPage() {
       {turnos && turnos.length > 0 && (
         <div className="turnos-list">
           {turnos.map((t) => (
-            <Link to={`/turnos/${t.codigo}`} key={t.id} className="turno-item card">
+            <Link to={`/turnos/${t.id}`} key={t.id} className="turno-item card">
               <div>
                 <p className="turno-item-fecha">{formatFechaHora(t.fecha_hora_inicio)}</p>
                 <p className="muted">{formatPrecio(t.precio)}</p>

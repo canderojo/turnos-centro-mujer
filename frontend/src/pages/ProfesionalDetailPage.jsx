@@ -94,7 +94,7 @@ export default function ProfesionalDetailPage() {
         fecha_hora_inicio: slotSeleccionado,
         ...form,
       });
-      navigate(`/turnos/${turno.codigo}`, { state: { recienCreado: true } });
+      navigate(`/turnos/${turno.id}`, { state: { recienCreado: true } });
     } catch (err) {
       setErrorReserva(err instanceof ApiError ? err.message : "No pudimos crear el turno.");
       setSlotSeleccionado(null);

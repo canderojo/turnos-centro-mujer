@@ -29,13 +29,6 @@ CREATE TABLE pacientes (
 
 CREATE TABLE turnos (
     id                 SERIAL PRIMARY KEY,
-    -- Identificador público del turno (el que aparece en las URLs):
-    -- un token aleatorio, a diferencia de "id" que es secuencial y por
-    -- lo tanto adivinable (probar /turnos/1, /turnos/2, ...). El
-    -- DEFAULT es una red de seguridad para inserts hechos a mano fuera
-    -- del backend; en uso normal, el backend siempre lo genera en Go.
-    codigo             TEXT NOT NULL UNIQUE
-        DEFAULT md5(random()::text || clock_timestamp()::text),
     -- REFERENCES crea una foreign key: Postgres no deja insertar un
     -- turno con un profesional_id que no exista en la tabla profesionales.
     profesional_id     INT NOT NULL REFERENCES profesionales(id),

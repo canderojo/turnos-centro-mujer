@@ -16,7 +16,7 @@ export default function App() {
           <Route path="/" element={<ProfesionalesPage />} />
           <Route path="/profesionales/:id" element={<ProfesionalDetailPage />} />
           <Route path="/mis-turnos" element={<MisTurnosPage />} />
-          <Route path="/turnos/:codigo" element={<TurnoDetailPage />} />
+          <Route path="/turnos/:id" element={<TurnoDetailPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

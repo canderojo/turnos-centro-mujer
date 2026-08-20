@@ -29,12 +29,9 @@ export function crearTurno(datos) {
   return post("/turnos", datos);
 }
 
-// Los turnos se buscan por su "codigo" (un token aleatorio), nunca por
-// su "id" numérico — el id es secuencial y por lo tanto adivinable
-// (ver decisiones.md, regla de negocio 7).
-export function obtenerTurno(codigo) {
-  if (MOCK) return mockObtenerTurno(codigo);
-  return get(`/turnos/${codigo}`);
+export function obtenerTurno(id) {
+  if (MOCK) return mockObtenerTurno(id);
+  return get(`/turnos/${id}`);
 }
 
 export function listarTurnosDePaciente({ dni, email }) {
@@ -43,7 +40,7 @@ export function listarTurnosDePaciente({ dni, email }) {
   return get(`/turnos?${param}`);
 }
 
-export function cambiarEstadoTurno(codigo, estado) {
-  if (MOCK) return mockCambiarEstadoTurno(codigo, estado);
-  return patch(`/turnos/${codigo}/estado`, { estado });
+export function cambiarEstadoTurno(id, estado) {
+  if (MOCK) return mockCambiarEstadoTurno(id, estado);
+  return patch(`/turnos/${id}/estado`, { estado });
 }

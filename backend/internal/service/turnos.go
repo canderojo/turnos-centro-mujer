@@ -1,7 +1,9 @@
 package service
 
 import (
+	"crypto/rand"
 	"database/sql"
+	"encoding/hex"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -9,6 +11,16 @@ import (
 	"github.com/canderojo/turnos-centro-mujer/backend/internal/models"
 	"github.com/canderojo/turnos-centro-mujer/backend/internal/repository"
 )
+
+// generarCodigo arma el identificador público de un turno: 16 bytes
+// aleatorios (128 bits, no se puede adivinar probando) en hexadecimal.
+func generarCodigo() (string, error) {
+	bytes := make([]byte, 16)
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
+}
 
 // CrearTurnoInput son los datos que necesitamos para reservar un
 // turno: a qué profesional, cuándo, y quién es el paciente (que puede
@@ -64,7 +76,13 @@ func CrearTurno(db *sqlx.DB, input CrearTurnoInput) (*models.Turno, error) {
 		return nil, ErrSuperposicionPaciente
 	}
 
+	codigo, err := generarCodigo()
+	if err != nil {
+		return nil, err
+	}
+
 	turno := models.Turno{
+		Codigo:          codigo,
 		ProfesionalID:   input.ProfesionalID,
 		PacienteID:      paciente.ID,
 		FechaHoraInicio: input.FechaHoraInicio,
@@ -94,11 +112,11 @@ func minutosDesdeMedianoche(t time.Time) int {
 	return t.Hour()*60 + t.Minute()
 }
 
-// ObtenerTurno trae un turno aplicando la regla de auto-completado (ver
-// autoCompletarSiCorresponde): no hay login de profesional que marque
-// a mano que la consulta sucedió, así que lo inferimos por la fecha.
-func ObtenerTurno(db *sqlx.DB, id int) (*models.Turno, error) {
-	turno, err := repository.ObtenerTurno(db, id)
+// ObtenerTurno trae un turno por su código público (no por su ID
+// secuencial — regla de negocio 7, ver decisiones.md) aplicando la
+// regla de auto-completado (ver autoCompletarSiCorresponde).
+func ObtenerTurno(db *sqlx.DB, codigo string) (*models.Turno, error) {
+	turno, err := repository.ObtenerTurnoPorCodigo(db, codigo)
 	if err == sql.ErrNoRows {
 		return nil, ErrTurnoNoExiste
 	}
@@ -140,8 +158,8 @@ func autoCompletarSiCorresponde(db *sqlx.DB, turno *models.Turno) (*models.Turno
 // estados: solo se permiten las transiciones definidas en
 // models.TransicionesPermitidas (por ejemplo, no se puede pasar de
 // "pendiente" directo a "completado").
-func CambiarEstadoTurno(db *sqlx.DB, id int, nuevoEstado string) (*models.Turno, error) {
-	turno, err := repository.ObtenerTurno(db, id)
+func CambiarEstadoTurno(db *sqlx.DB, codigo string, nuevoEstado string) (*models.Turno, error) {
+	turno, err := repository.ObtenerTurnoPorCodigo(db, codigo)
 	if err == sql.ErrNoRows {
 		return nil, ErrTurnoNoExiste
 	}
@@ -161,5 +179,8 @@ func CambiarEstadoTurno(db *sqlx.DB, id int, nuevoEstado string) (*models.Turno,
 		return nil, ErrTransicionInvalida
 	}
 
-	return repository.ActualizarEstadoTurno(db, id, nuevoEstado)
+	// ActualizarEstadoTurno adentro sí usa el ID numérico interno (la
+	// primary key) — nunca se expone, solo se usa acá, después de haber
+	// resuelto el turno correcto a través de su código público.
+	return repository.ActualizarEstadoTurno(db, turno.ID, nuevoEstado)
 }

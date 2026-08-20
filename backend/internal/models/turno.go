@@ -4,7 +4,11 @@ import "time"
 
 // Turno representa una fila de la tabla "turnos".
 type Turno struct {
-	ID              int       `db:"id" json:"id"`
+	ID int `db:"id" json:"id"`
+	// Codigo es el identificador público del turno (el que se usa en
+	// las URLs y que ve el paciente): un token aleatorio, a diferencia
+	// de ID que es secuencial y por lo tanto adivinable.
+	Codigo          string    `db:"codigo" json:"codigo"`
 	ProfesionalID   int       `db:"profesional_id" json:"profesional_id"`
 	PacienteID      int       `db:"paciente_id" json:"paciente_id"`
 	FechaHoraInicio time.Time `db:"fecha_hora_inicio" json:"fecha_hora_inicio"`

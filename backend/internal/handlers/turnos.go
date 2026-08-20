@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/go-chi/chi/v5"
@@ -66,15 +65,11 @@ func (h *TurnosHandler) Crear(w http.ResponseWriter, r *http.Request) {
 	responderJSON(w, http.StatusCreated, turno)
 }
 
-// Obtener responde GET /turnos/{id}.
+// Obtener responde GET /turnos/{codigo}.
 func (h *TurnosHandler) Obtener(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	if err != nil {
-		responderError(w, http.StatusBadRequest, "id inválido")
-		return
-	}
+	codigo := chi.URLParam(r, "codigo")
 
-	turno, err := service.ObtenerTurno(h.DB, id)
+	turno, err := service.ObtenerTurno(h.DB, codigo)
 	if err != nil {
 		responderErrorDeNegocio(w, err)
 		return
@@ -113,20 +108,16 @@ func (h *TurnosHandler) ListarDePaciente(w http.ResponseWriter, r *http.Request)
 	responderJSON(w, http.StatusOK, turnos)
 }
 
-// cambiarEstadoRequest es el body esperado de PATCH /turnos/{id}/estado.
+// cambiarEstadoRequest es el body esperado de PATCH /turnos/{codigo}/estado.
 type cambiarEstadoRequest struct {
 	Estado string `json:"estado"`
 }
 
-// CambiarEstado responde PATCH /turnos/{id}/estado: confirma, cancela
-// o completa un turno, respetando la máquina de estados definida en
-// models.TransicionesPermitidas.
+// CambiarEstado responde PATCH /turnos/{codigo}/estado: confirma,
+// cancela o completa un turno, respetando la máquina de estados
+// definida en models.TransicionesPermitidas.
 func (h *TurnosHandler) CambiarEstado(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(chi.URLParam(r, "id"))
-	if err != nil {
-		responderError(w, http.StatusBadRequest, "id inválido")
-		return
-	}
+	codigo := chi.URLParam(r, "codigo")
 
 	var body cambiarEstadoRequest
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -134,7 +125,7 @@ func (h *TurnosHandler) CambiarEstado(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	turno, err := service.CambiarEstadoTurno(h.DB, id, body.Estado)
+	turno, err := service.CambiarEstadoTurno(h.DB, codigo, body.Estado)
 	if err != nil {
 		responderErrorDeNegocio(w, err)
 		return

@@ -55,6 +55,7 @@ const PROFESIONALES = [
 let turnos = [
   {
     id: 1001,
+    codigo: "mock-codigo-1001",
     profesional_id: 2,
     paciente_id: 1,
     fecha_hora_inicio: proximaFecha(3, 10, 0),
@@ -64,6 +65,7 @@ let turnos = [
   },
   {
     id: 1002,
+    codigo: "mock-codigo-1002",
     profesional_id: 1,
     paciente_id: 1,
     fecha_hora_inicio: proximaFecha(0, 9, 30),
@@ -79,6 +81,13 @@ function proximaFecha(diasDesdeHoy, hora, minuto) {
   fecha.setDate(fecha.getDate() + diasDesdeHoy);
   fecha.setHours(hora, minuto, 0, 0);
   return fecha.toISOString();
+}
+
+// El backend real identifica un turno por un código aleatorio, no por
+// su id secuencial (ver decisiones.md, regla de negocio 7) — el mock
+// imita ese mismo contrato para no desentonar si se vuelve a activar.
+function generarCodigoMock() {
+  return `mock-${Math.random().toString(36).slice(2)}`;
 }
 
 function slotsOcupados(profesionalId) {
@@ -140,6 +149,7 @@ export function mockCrearTurno(datos) {
 
   const turno = {
     id: siguienteId++,
+    codigo: generarCodigoMock(),
     profesional_id: profesional.id,
     paciente_id: 1,
     fecha_hora_inicio: inicio.toISOString(),
@@ -151,8 +161,8 @@ export function mockCrearTurno(datos) {
   return delay(turno);
 }
 
-export function mockObtenerTurno(id) {
-  const turno = turnos.find((t) => t.id === Number(id));
+export function mockObtenerTurno(codigo) {
+  const turno = turnos.find((t) => t.codigo === codigo);
   return turno ? delay(turno) : Promise.reject(new ApiError("Turno no encontrado", 404));
 }
 
@@ -161,8 +171,8 @@ export function mockListarTurnosDePaciente() {
   return delay(turnos);
 }
 
-export function mockCambiarEstadoTurno(id, estado) {
-  const turno = turnos.find((t) => t.id === Number(id));
+export function mockCambiarEstadoTurno(codigo, estado) {
+  const turno = turnos.find((t) => t.codigo === codigo);
   if (!turno) return Promise.reject(new ApiError("Turno no encontrado", 404));
   turno.estado = estado;
   return delay({ ...turno });

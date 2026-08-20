@@ -66,6 +66,12 @@ button {
   flex: 1;
 }
 
+@media (max-width: 480px) {
+  .page {
+    padding: var(--space-5) var(--space-4) var(--space-6);
+  }
+}
+
 .btn {
   display: inline-flex;
   align-items: center;

@@ -1,10 +1,21 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ESPECIALIDADES } from "../api/profesionales";
 import "./Header.css";
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 4);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="header">
+    <header className={`header${scrolled ? " header-scrolled" : ""}`}>
       <div className="header-inner">
         <NavLink to="/" className="header-brand">
           <span className="header-brand-mark">
@@ -30,14 +41,6 @@ export default function Header() {
           </NavLink>
         </nav>
       </div>
-      <p className="header-ribbon">
-        {ESPECIALIDADES.map((e, i) => (
-          <span key={e.value}>
-            {i > 0 && <span className="header-ribbon-sep">✦</span>}
-            {e.label}
-          </span>
-        ))}
-      </p>
     </header>
   );
 }

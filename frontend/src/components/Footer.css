@@ -9,7 +9,7 @@
   margin: 0 auto;
   padding: var(--space-6) var(--space-5);
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: var(--space-6);
 }
 
@@ -67,7 +67,27 @@
   flex-direction: column;
   gap: var(--space-2);
   font-size: 0.9rem;
-  color: #e7bcd4;
+}
+
+.footer-col li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.footer-col li svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.footer-col li.footer-col-nota {
+  display: block;
+  padding-left: 23px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .footer-nota {

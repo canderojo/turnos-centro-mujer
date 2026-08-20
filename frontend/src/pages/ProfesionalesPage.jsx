@@ -30,8 +30,8 @@ export default function ProfesionalesPage() {
           <p className="hero-eyebrow">Turnos online</p>
           <h1>Reservá tu consulta con el profesional que necesitás</h1>
           <p className="hero-subtitulo">
-            Dermatología, nutrición, ecografía y endocrinología. Elegí especialidad,
-            fecha y horario disponible.
+            Elegí el horario que te quede mejor y reservá en minutos, sin
+            llamados ni esperas.
           </p>
 
           <div className="tabs" role="group" aria-label="Filtrar por especialidad">

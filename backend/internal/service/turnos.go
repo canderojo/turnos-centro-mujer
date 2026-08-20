@@ -94,6 +94,48 @@ func minutosDesdeMedianoche(t time.Time) int {
 	return t.Hour()*60 + t.Minute()
 }
 
+// ObtenerTurno trae un turno aplicando la regla de auto-completado (ver
+// autoCompletarSiCorresponde): no hay login de profesional que marque
+// a mano que la consulta sucedió, así que lo inferimos por la fecha.
+func ObtenerTurno(db *sqlx.DB, id int) (*models.Turno, error) {
+	turno, err := repository.ObtenerTurno(db, id)
+	if err == sql.ErrNoRows {
+		return nil, ErrTurnoNoExiste
+	}
+	if err != nil {
+		return nil, err
+	}
+	return autoCompletarSiCorresponde(db, turno)
+}
+
+// ListarTurnosDePaciente es como repository.ListarTurnosDePaciente,
+// pero aplicando la misma regla de auto-completado a cada turno.
+func ListarTurnosDePaciente(db *sqlx.DB, pacienteID int) ([]models.Turno, error) {
+	turnos, err := repository.ListarTurnosDePaciente(db, pacienteID)
+	if err != nil {
+		return nil, err
+	}
+	for i := range turnos {
+		actualizado, err := autoCompletarSiCorresponde(db, &turnos[i])
+		if err != nil {
+			return nil, err
+		}
+		turnos[i] = *actualizado
+	}
+	return turnos, nil
+}
+
+// autoCompletarSiCorresponde resuelve la regla de negocio 6: como no
+// hay login de profesional/staff que marque a mano que una consulta
+// sucedió, un turno "confirmado" cuyo horario ya pasó (y que no fue
+// cancelado) se considera completado automáticamente al leerlo.
+func autoCompletarSiCorresponde(db *sqlx.DB, turno *models.Turno) (*models.Turno, error) {
+	if turno.Estado == models.EstadoConfirmado && time.Now().After(turno.FechaHoraFin) {
+		return repository.ActualizarEstadoTurno(db, turno.ID, models.EstadoCompletado)
+	}
+	return turno, nil
+}
+
 // CambiarEstadoTurno aplica la regla de negocio de la máquina de
 // estados: solo se permiten las transiciones definidas en
 // models.TransicionesPermitidas (por ejemplo, no se puede pasar de

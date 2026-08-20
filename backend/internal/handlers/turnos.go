@@ -74,13 +74,9 @@ func (h *TurnosHandler) Obtener(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	turno, err := repository.ObtenerTurno(h.DB, id)
-	if err == sql.ErrNoRows {
-		responderError(w, http.StatusNotFound, "turno no encontrado")
-		return
-	}
+	turno, err := service.ObtenerTurno(h.DB, id)
 	if err != nil {
-		responderError(w, http.StatusInternalServerError, "no se pudo obtener el turno")
+		responderErrorDeNegocio(w, err)
 		return
 	}
 
@@ -108,7 +104,7 @@ func (h *TurnosHandler) ListarDePaciente(w http.ResponseWriter, r *http.Request)
 		return
 	}
 
-	turnos, err := repository.ListarTurnosDePaciente(h.DB, paciente.ID)
+	turnos, err := service.ListarTurnosDePaciente(h.DB, paciente.ID)
 	if err != nil {
 		responderError(w, http.StatusInternalServerError, "no se pudieron listar los turnos")
 		return

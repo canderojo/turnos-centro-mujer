@@ -51,4 +51,11 @@ INSERT INTO profesionales (nombre, especialidad, hora_inicio_atencion, hora_fin_
     ('Dra. Laura Gómez',      'dermatologia',    '09:00', '17:00', 30, 8000.00),
     ('Lic. Marina Ruiz',      'nutricion',       '08:00', '14:00', 45, 6500.00),
     ('Dr. Pablo Sánchez',     'ecografia',       '10:00', '18:00', 20, 9500.00),
-    ('Dra. Carla Fernández',  'endocrinologia',  '09:00', '13:00', 30, 8500.00);
+    ('Dra. Carla Fernández',  'endocrinologia',  '09:00', '13:00', 30, 8500.00),
+    -- Un segundo profesional por especialidad, con horarios bien distintos
+    -- (turno vespertino, duraciones cortas/largas), para tener variedad
+    -- real al probar filtros y reservas.
+    ('Dr. Nicolás Herrera',   'dermatologia',    '14:00', '19:00', 25, 7200.00),
+    ('Lic. Valentina Suárez', 'nutricion',       '13:00', '20:00', 30, 5800.00),
+    ('Dra. Agustina López',   'ecografia',       '07:00', '12:00', 30, 10200.00),
+    ('Dr. Tomás Ibáñez',      'endocrinologia',  '10:00', '16:00', 40, 9000.00);

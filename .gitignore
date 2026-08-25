@@ -14,7 +14,6 @@ frontend/.vite/
 .env
 backend/.env
 frontend/.env
-frontend/.env.local
 
 # --- Editores / SO ---
 .vscode/
